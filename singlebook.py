@@ -8,7 +8,7 @@ def acquire_html(url):
 	return soup
 
 def acquire_title(soup):
-	title =f"{soup.h1.string}"
+	title = f"'{soup.h1.string}'"
 	return title
 
 def acquire_code_tax_number(soup):
@@ -38,7 +38,7 @@ def acquire_image_url(soup):
 def acquire_product_description(soup):
 	is_description =  soup.find('p', {'class': None})
 	if is_description:
-		product_description = is_description.string
+		product_description = f"'{is_description.string}'"
 	else:
 		product_description = ""
 	return product_description
