@@ -29,3 +29,8 @@ def acquire_category(soup):
 def acquire_star_rating(soup):
 	review_rating = soup.find(class_=re.compile("^star"))['class'][1]
 	return review_rating
+
+def acquire_image_url(soup):
+	partial_url = soup.img['src'][5:]
+	image_url = f"http://books.toscrape.com{partial_url}"
+	return image_url
