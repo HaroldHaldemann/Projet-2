@@ -20,3 +20,8 @@ def acquire_code_tax_number(soup):
 		'number_available': table[5].string,
 	}
 	return code_tax_number
+
+def acquire_category(soup):
+	table = soup.ul.find_all('a')
+	category = table[2].string
+	return category
