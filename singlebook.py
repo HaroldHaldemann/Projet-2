@@ -34,3 +34,11 @@ def acquire_image_url(soup):
 	partial_url = soup.img['src'][5:]
 	image_url = f"http://books.toscrape.com{partial_url}"
 	return image_url
+
+def acquire_product_description(soup):
+	is_description =  soup.find('p', {'class': None})
+	if is_description:
+		product_description = is_description.string
+	else:
+		product_description = ""
+	return product_description
