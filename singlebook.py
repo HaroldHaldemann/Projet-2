@@ -42,3 +42,18 @@ def acquire_product_description(soup):
 	else:
 		product_description = ""
 	return product_description
+
+def info_book(url):
+	soup = acquire_html(url)
+	return [
+		url,
+		acquire_code_tax_number(soup)['universal_product_code'],
+		acquire_title(soup),
+		acquire_code_tax_number(soup)['price_including_tax'],
+		acquire_code_tax_number(soup)['price_excluding_tax'],
+		acquire_code_tax_number(soup)['number_available'],
+		acquire_category(soup),
+		acquire_star_rating(soup),
+		acquire_image_url(soup),
+		acquire_product_description(soup),
+	]
