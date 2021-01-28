@@ -25,3 +25,7 @@ def acquire_category(soup):
 	table = soup.ul.find_all('a')
 	category = table[2].string
 	return category
+
+def acquire_star_rating(soup):
+	review_rating = soup.find(class_=re.compile("^star"))['class'][1]
+	return review_rating
