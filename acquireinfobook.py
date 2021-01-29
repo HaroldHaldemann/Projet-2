@@ -4,7 +4,7 @@ import re
 
 def acquire_html(url):
 	response = requests.get(url)
-	soup = BeautifulSoup(response.content, 'html.parser')
+	soup = BeautifulSoup(response.content, 'lxml')
 	return soup
 
 def acquire_title(soup):

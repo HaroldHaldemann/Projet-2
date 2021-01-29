@@ -31,7 +31,7 @@ def acquire_urls_categories(url):
 	soup = acquire_html(url)
 	list_partial_urls_categories = soup.find('ul', {'class': None}).find_all('a')
 	list_urls_categories = map(
-		lambda x: f"{url[:43]}{x['href'][2:]}",
+		lambda x: f"{url[:44]}{x['href'][2:]}",
 		list_partial_urls_categories,
 	)
 	return list_urls_categories

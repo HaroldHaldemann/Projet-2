@@ -4,6 +4,15 @@ from bs4 import BeautifulSoup
 from acquireurls import acquire_list_urls_books
 from acquireinfobook import acquire_html, info_book
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+	"--category",
+	type=str,
+	help="Rentrer l'url de la categorie que vous voulez scraper",
+)
+args = parser.parse_args()
 
 # chemin pour la création du dossier où se situera les fichiers CSV
 path = "" # doit terminer par / si non vide
@@ -21,5 +30,12 @@ def write_info_books(url):
 		)
 		for book in list(books):
 			for info in book:
-				file.write(f"{info},")
+				try:
+					file.write(f"{info},")
+				except UnicodeEncodeError:
+					file.write(f"'{info.encode(encoding='ascii',errors='replace')}',")
 			file.write('\n')
+
+if __name__ == '__main__':
+	if args.category:
+		write_info_books(args.category)
