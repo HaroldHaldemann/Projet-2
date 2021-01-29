@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from singlebook import *
+from acquireinfobook import acquire_html
 import requests
 
 def acquire_page_list_urls_books(soup):
@@ -27,19 +27,11 @@ def acquire_list_urls_books(url):
 		index += 1
 	return list_urls_books
 
-def write_info_books(url):
+def acquire_urls_categories(url):
 	soup = acquire_html(url)
-	category = soup.h1.string
-	with open(f"{category}_books.csv", 'w') as file:
-		file.write('product_page_url,universal_product_code,title,price_including_tax,price_excluding_tax,number_available,category,review_rating,image_url,product_description\n')
-		books = map(
-			lambda x: info_book(x),
-			 acquire_list_urls_books(url),
-		)
-		for book in list(books):
-			for info in book:
-				file.write(f"{info},")
-			file.write('\n')
-
-url = 'http://books.toscrape.com/catalogue/category/books/fantasy_19/index.html'
-write_info_books(url)
+	list_partial_urls_categories = soup.find('ul', {'class': None}).find_all('a')
+	list_urls_categories = map(
+		lambda x: f"{url[:43]}{x['href'][2:]}",
+		list_partial_urls_categories,
+	)
+	return list_urls_categories
