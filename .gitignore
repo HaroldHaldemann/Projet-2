@@ -1,0 +1,9 @@
+#ignorer les fichiers csv
+*.csv
+
+#ignorer le read me
+README.md
+
+#ignorer les dossiers suivants
+/__pycache__
+/Fichiers CSV
