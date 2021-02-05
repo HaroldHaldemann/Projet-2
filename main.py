@@ -1,8 +1,8 @@
 #include:utf-8
 
 from bs4 import BeautifulSoup
-from acquireurls import acquire_urls_categories
-from writeincsv import write_info_books
+import acquireurls as au
+import writeincsv as wic
 import tqdm
 
 def main(url):
@@ -11,8 +11,8 @@ def main(url):
 	Write the informations of the books in CSV files.
 	One CSV for a single category.
 	"""
-	for url_category in tqdm.tqdm(acquire_urls_categories(url)):
-		write_info_books(url_category)
+	for url_category in tqdm.tqdm(au.acquire_urls_categories(url)):
+		wic.write_info_books(url_category)
 
 
 if __name__ == '__main__':

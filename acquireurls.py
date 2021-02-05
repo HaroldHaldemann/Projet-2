@@ -33,7 +33,7 @@ def acquire_list_urls_books(url):
 		list_urls_books += acquire_page_list_urls_books(soup)
 		next_url = f"{base_url}/page-{index}.html"
 		response = requests.get(next_url)
-		soup = acquire_html(next_url)
+		soup = aib.acquire_html(next_url)
 		index += 1
 	return list(list_urls_books)
 

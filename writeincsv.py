@@ -27,19 +27,26 @@ def write_info_books(url):
 		os.mkdir(f"{path}Fichiers CSV")
 	soup = aib.acquire_html(url)
 	category = soup.h1.string
-	with open(f"{path}Fichiers CSV/{category} Books.csv", 'w') as file:
-		file.write('product_page_url,universal_product_code,title,price_including_tax,price_excluding_tax,number_available,category,review_rating,image_url,product_description\n')
-		books = map(
-			lambda x: aib.info_book(x),
-			 au.acquire_list_urls_books(url),
-		)
-		for book in list(books):
-			for info in book:
-				try:
-					file.write(f"{info},")
-				except UnicodeEncodeError:
-					file.write(f"'{info.encode(encoding='ascii',errors='replace')}',")
-			file.write('\n')
+	file = csv.writer(
+		open(f"{path}Fichiers CSV/{category} Books.csv", 'w', encoding='utf8')
+	)
+	file.writerow([
+		'product_page_url',
+		'universal_product_code',
+		'title',
+		'price_including_tax',
+		'price_excluding_tax',
+		'number_available',
+		'category',
+		'review_rating',
+		'image',
+		'product_description'
+	])
+	books = map(
+		lambda x: aib.info_book(x),
+			au.acquire_list_urls_books(url),
+	)
+	file.writerows(books)
 
 if __name__ == '__main__':
 	if args.category:

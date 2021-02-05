@@ -18,7 +18,7 @@ def acquire_title(soup):
 	Take a BeautifulSoup content of a book page.
 	Return the title of the book.
 	"""
-	title = f"'{soup.h1.string}'"
+	title = soup.h1.string
 	return title
 
 def acquire_code_tax_number(soup):
@@ -68,7 +68,7 @@ def acquire_product_description(soup):
 	"""
 	is_description =  soup.find('p', {'class': None})
 	if is_description:
-		product_description = f"'{is_description.string}'"
+		product_description = is_description.string
 	else:
 		product_description = ""
 	return product_description
