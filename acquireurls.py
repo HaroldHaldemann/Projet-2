@@ -3,6 +3,10 @@ from acquireinfobook import acquire_html
 import requests
 
 def acquire_page_list_urls_books(soup):
+	"""
+	Take a BeautifulSoup content of a category page.
+	Return a list of the urls of the books in the first page for a unique category.
+	"""
 	page_list_partial_urls_books = map(
 		lambda x: x.a['href'][8:],
 		soup.find_all('h3'),
@@ -14,6 +18,10 @@ def acquire_page_list_urls_books(soup):
 	return list(page_list_urls_books)
 
 def acquire_list_urls_books(url):
+	"""
+	Take a url of a category page.
+	Return a list of the urls of the books for a single category page.
+	"""
 	response = requests.get(url)
 	soup = acquire_html(url)
 	list_urls_books = []
@@ -25,9 +33,13 @@ def acquire_list_urls_books(url):
 		response = requests.get(next_url)
 		soup = acquire_html(next_url)
 		index += 1
-	return list_urls_books
+	return list(list_urls_books)
 
 def acquire_urls_categories(url):
+	"""
+	Take the url of the site.
+	Return a list of the urls of the category pages.
+	"""
 	soup = acquire_html(url)
 	list_partial_urls_categories = soup.find('ul', {'class': None}).find_all('a')
 	list_urls_categories = map(

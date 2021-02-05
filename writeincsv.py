@@ -18,6 +18,10 @@ args = parser.parse_args()
 path = "" # doit terminer par / si non vide
 
 def write_info_books(url):
+	"""
+	Take the url of a category page.
+	Write in a CSV file the informations of the books.
+	"""
 	if not os.path.exists(f"{path}Fichiers CSV"):
 		os.mkdir(f"{path}Fichiers CSV")
 	soup = acquire_html(url)
