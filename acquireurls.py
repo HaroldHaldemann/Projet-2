@@ -1,5 +1,7 @@
+#include:utf-8
+
 from bs4 import BeautifulSoup
-from acquireinfobook import acquire_html
+import acquireinfobook as aib
 import requests
 
 def acquire_page_list_urls_books(soup):
@@ -23,7 +25,7 @@ def acquire_list_urls_books(url):
 	Return a list of the urls of the books for a single category page.
 	"""
 	response = requests.get(url)
-	soup = acquire_html(url)
+	soup = aib.acquire_html(url)
 	list_urls_books = []
 	base_url = url[:-11]
 	index = 2
@@ -40,7 +42,7 @@ def acquire_urls_categories(url):
 	Take the url of the site.
 	Return a list of the urls of the category pages.
 	"""
-	soup = acquire_html(url)
+	soup = aib.acquire_html(url)
 	list_partial_urls_categories = soup.find('ul', {'class': None}).find_all('a')
 	list_urls_categories = map(
 		lambda x: f"{url[:44]}{x['href'][2:]}",
