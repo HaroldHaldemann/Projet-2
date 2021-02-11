@@ -15,5 +15,6 @@ def main(url):
 
 
 if __name__ == '__main__':
-	url = 'http://books.toscrape.com/catalogue/category/books_1/index.html'
+	url = "http://books.toscrape.com/catalogue/" \
+		"category/books_1/index.html"
 	main(url)

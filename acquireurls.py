@@ -4,7 +4,9 @@ import sys
 try:
 	import requests
 except ModuleNotFoundError:
-	print("requests module is not installed, please report to README.md for further information.")
+	print("requests module is not installed, " \
+		"please report to README.md for further information."
+	)
 	sys.exit()
 import acquireinfobook as aib
 

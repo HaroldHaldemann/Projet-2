@@ -4,7 +4,9 @@ import sys
 try:
 	import bs4
 except ModuleNotFoundError:
-	print("BS4 module is not installed, please report to README.md for further informations")
+	print("BS4 module is not installed, " \
+		"please report to README.md for further informations"
+	)
 	sys.exit()
 import requests
 import re
@@ -18,10 +20,14 @@ def acquire_html(url):
 		response = requests.get(url)
 		soup = bs4.BeautifulSoup(response.content, 'lxml')
 	except requests.exceptions.ConnectionError:
-		print("Cannot reach the site, please verify your internet connection")
+		print("Cannot reach the site, " \
+			"please verify your internet connection"
+		)
 		sys.exit()
 	except bs4.FeatureNotFound:
-		print("lxml parser library is not installed, please report te README.md for further informations.")
+		print("lxml parser library is not installed, " \
+			"please report te README.md for further informations."
+		)
 		sys.exit()
 	return soup
 
