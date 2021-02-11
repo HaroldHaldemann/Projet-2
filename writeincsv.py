@@ -1,6 +1,5 @@
 #include:utf-8
 
-from bs4 import BeautifulSoup
 import acquireurls as au
 import acquireinfobook as aib
 import csv
@@ -23,13 +22,15 @@ def write_info_books(url):
 	Take the url of a category page.
 	Write in a CSV file the informations of the books.
 	"""
-	if not os.path.exists(f"{path}Fichiers CSV"):
-		os.mkdir(f"{path}Fichiers CSV")
+	if not os.path.exists(f"{path}CSV Files"):
+		os.mkdir(f"{path}CSV Files")
 	soup = aib.acquire_html(url)
 	category = soup.h1.string
-	file = csv.writer(
-		open(f"{path}Fichiers CSV/{category} Books.csv", 'w', encoding='utf8')
-	)
+	file = csv.writer(open(
+		f"{path}CSV Files/{category} Books.csv",
+		'w',
+		encoding='utf8',
+	))
 	file.writerow([
 		'product_page_url',
 		'universal_product_code',
@@ -44,7 +45,7 @@ def write_info_books(url):
 	])
 	books = map(
 		lambda x: aib.info_book(x),
-			au.acquire_list_urls_books(url),
+		au.acquire_list_urls_books(url),
 	)
 	file.writerows(books)
 

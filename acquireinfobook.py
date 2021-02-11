@@ -1,6 +1,11 @@
 #include:utf-8
 
-from bs4 import BeautifulSoup
+import sys
+try:
+	import bs4
+except ModuleNotFoundError:
+	print("BS4 module is not installed, please report to README.md for further informations")
+	sys.exit()
 import requests
 import re
 
@@ -9,8 +14,15 @@ def acquire_html(url):
 	Take a url.
 	Return the BeautifulSoup content of this url.
 	"""
-	response = requests.get(url)
-	soup = BeautifulSoup(response.content, 'lxml')
+	try:
+		response = requests.get(url)
+		soup = bs4.BeautifulSoup(response.content, 'lxml')
+	except requests.exceptions.ConnectionError:
+		print("Cannot reach the site, please verify your internet connection")
+		sys.exit()
+	except bs4.FeatureNotFound:
+		print("lxml parser library is not installed, please report te README.md for further informations.")
+		sys.exit()
 	return soup
 
 def acquire_title(soup):
@@ -49,7 +61,9 @@ def acquire_star_rating(soup):
 	Take a BeautifulSoup content of a book page.
 	Return the rating of the book.
 	"""
-	review_rating = soup.find(class_=re.compile("^star"))['class'][1]
+	review_rating = soup.find(
+		class_=re.compile("^star")
+	)['class'][1]
 	return review_rating
 
 def acquire_image_url(soup):

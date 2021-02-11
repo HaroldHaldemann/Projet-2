@@ -1,8 +1,12 @@
 #include:utf-8
 
-from bs4 import BeautifulSoup
+import sys
+try:
+	import requests
+except ModuleNotFoundError:
+	print("requests module is not installed, please report to README.md for further information.")
+	sys.exit()
 import acquireinfobook as aib
-import requests
 
 def acquire_page_list_urls_books(soup):
 	"""
@@ -43,7 +47,10 @@ def acquire_urls_categories(url):
 	Return a list of the urls of the category pages.
 	"""
 	soup = aib.acquire_html(url)
-	list_partial_urls_categories = soup.find('ul', {'class': None}).find_all('a')
+	list_partial_urls_categories = soup.find(
+		'ul',
+		{'class': None},
+	).find_all('a')
 	list_urls_categories = map(
 		lambda x: f"{url[:44]}{x['href'][2:]}",
 		list_partial_urls_categories,
