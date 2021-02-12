@@ -1,6 +1,7 @@
 #include:utf-8
 
 import sys
+import os
 try:
 	import bs4
 except ModuleNotFoundError:
@@ -10,6 +11,8 @@ except ModuleNotFoundError:
 	sys.exit()
 import requests
 import re
+import urllib.request
+import main
 
 def acquire_html(url):
 	"""
@@ -21,12 +24,12 @@ def acquire_html(url):
 		soup = bs4.BeautifulSoup(response.content, 'lxml')
 	except requests.exceptions.ConnectionError:
 		print("Cannot reach the site, " \
-			"please verify your internet connection"
+			"please check your internet connection"
 		)
 		sys.exit()
 	except bs4.FeatureNotFound:
 		print("lxml parser library is not installed, " \
-			"please report te README.md for further informations."
+			"please report to README.md for further informations."
 		)
 		sys.exit()
 	return soup
@@ -81,6 +84,21 @@ def acquire_image_url(soup):
 	image_url = f"http://books.toscrape.com{partial_url}"
 	return image_url
 
+def acquire_image_path(soup):
+	"""
+	Take a BeautifulSoup content of a book page.
+	Download the image of the book.
+	Return the absolute path to the images.
+	"""
+	urllib.request.urlretrieve(
+		acquire_image_url(soup),
+		f"{main.path}BookImages/" \
+		f"{acquire_title(soup)}.jpg".replace(" ", ""),
+	)
+	path = f"{os.getcwd()}{main.path}BookImages/" \
+		f"{acquire_title(soup)}.jpg".replace(" ", "")
+	return path
+
 def acquire_product_description(soup):
 	"""
 	Take a BeautifulSoup content of a book page.
@@ -97,6 +115,7 @@ def info_book(url):
 	"""
 	Take a url of a book page.
 	Return a list of the informations of a book.
+	Download the image of the book.
 	"""
 	soup = acquire_html(url)
 	return [
@@ -109,5 +128,7 @@ def info_book(url):
 		acquire_category(soup),
 		acquire_star_rating(soup),
 		acquire_image_url(soup),
+		acquire_image_path(soup),
 		acquire_product_description(soup),
 	]
+

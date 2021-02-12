@@ -4,19 +4,8 @@ import acquireurls as au
 import acquireinfobook as aib
 import csv
 import os
-import argparse
 import sys
-
-parser = argparse.ArgumentParser()
-parser.add_argument(
-	"--category",
-	type=str,
-	help="Enter the category url you want to scrap",
-)
-args = parser.parse_args()
-
-# path for the location of the CSV files
-path = "" # must finish by / if unempty
+import main
 
 def write_info_books(url):
 	"""
@@ -24,7 +13,7 @@ def write_info_books(url):
 	Write in a CSV file the informations of the books.
 	"""
 	try:
-		os.mkdir(f"{path}CSV Files")
+		os.mkdir(f"{main.path}CSVFiles")
 	except FileExistsError:
 		pass
 	except PermissionError:
@@ -32,13 +21,16 @@ def write_info_books(url):
 			"please report to README.md for further informations."
 		)
 		sys.exit()
+	if not os.path.exists(f"{main.path}BookImages"):
+		os.mkdir(f"{main.path}BookImages")
 	soup = aib.acquire_html(url)
 	category = soup.h1.string
 	try:
 		file = csv.writer(open(
-			f"{path}CSV Files/{category} Books.csv",
+			f"{main.path}CSVFiles/{category}.csv".replace(" ", ""),
 			'w',
 			encoding='utf8',
+			newline='',
 		))
 	except PermissionError:
 		print("Permission denied, " \
@@ -54,7 +46,8 @@ def write_info_books(url):
 		'number_available',
 		'category',
 		'review_rating',
-		'image',
+		'url_image',
+		'path_image',
 		'product_description'
 	])
 	books = map(
@@ -62,7 +55,3 @@ def write_info_books(url):
 		au.acquire_list_urls_books(url),
 	)
 	file.writerows(books)
-
-if __name__ == '__main__':
-	if args.category:
-		write_info_books(args.category)
