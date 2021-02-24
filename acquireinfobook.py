@@ -14,6 +14,17 @@ import re
 import urllib.request
 import main
 
+def replace_multiple_caracters(string, caracters, replacement):
+	"""
+	Take a string you want to replace, 
+	a string of caracters you want to replace
+	and the caracter of replacement of these caracters
+	Replace the caracters by their replacement.
+	"""
+	for caracter in caracters:
+		string = string.replace(caracter, replacement)
+	return string
+
 def acquire_html(url):
 	"""
 	Take a url.
@@ -90,13 +101,18 @@ def acquire_image_path(soup):
 	Download the image of the book.
 	Return the absolute path to the images.
 	"""
+	category = f"{acquire_category(soup)}".replace(" ","")
+	title = f"{acquire_title(soup)}"
+	title = replace_multiple_caracters(title, ",;.*?!'\" ", "")
+	title = replace_multiple_caracters(title, ":/\\|<>", "-")
+	if not os.path.exists(f"{main.path}BookImages/{category}"):
+		os.mkdir(f"{main.path}BookImages/{category}")
 	urllib.request.urlretrieve(
 		acquire_image_url(soup),
-		f"{main.path}BookImages/" \
-		f"{acquire_title(soup)}.jpg".replace(" ", ""),
+		f"{main.path}BookImages/{category}/{title}.jpg",
 	)
-	path = f"{os.getcwd()}{main.path}BookImages/" \
-		f"{acquire_title(soup)}.jpg".replace(" ", "")
+	path = f"{os.getcwd()}" \
+		f"{main.path}BookImages/{category}/{title}.jpg",
 	return path
 
 def acquire_product_description(soup):

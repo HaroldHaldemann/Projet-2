@@ -76,11 +76,26 @@ Example:
 python main.py --category "http://books.toscrape.com/catalogue/category/books/travel_2/index.html"
 ```
 
-You can execute the script with both options
+You can execute the script with both options.
 
 Example:
 ```python
 python main.py --category "http://books.toscrape.com/catalogue/category/books/travel_2/index.html" --path "C:/path/to/files/"
 ```
 
+To open the csv files files, please check the following:
+- The datas are imported with caracter encoding UTF-8.
+- The datas are separated by coma (,) with string splitter double quote (").
+- The datas between double quotes are formatted as text.
+
 ## Troubleshooting
+
+BS4 / requests module / lxml parser library is not installed: 
+Please check that you have activated your virtual environment or that the modules listed in requirements.txt are installed.
+
+Cannot reach the site: 
+Please check your Wifi or ethernet connection or if the site you want to parse is down.
+
+Permission denied:
+Please try to write in a location you have the rights to do so by modifying the --path option when you execute the script.
+If you still don't have the rights to wwrite, please ask your administrator. 
