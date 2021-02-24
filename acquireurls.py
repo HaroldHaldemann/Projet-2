@@ -13,7 +13,8 @@ import acquireinfobook as aib
 def acquire_page_list_urls_books(soup):
 	"""
 	Take a BeautifulSoup content of a category page.
-	Return a list of the urls of the books in the first page for a unique category.
+	Return a list of the urls of the books 
+	in the first page for a unique category.
 	"""
 	page_list_partial_urls_books = map(
 		lambda x: x.a['href'][8:],

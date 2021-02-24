@@ -56,7 +56,8 @@ def acquire_title(soup):
 def acquire_code_tax_number(soup):
 	"""
 	Take a BeautifulSoup content of a book page.
-	Return the code, the price with and without tax and the number available of the book.
+	Return the code, the price with and without tax 
+	and the number available of the book.
 	"""
 	table = soup.table.find_all('td')
 	code_tax_number = {
@@ -111,8 +112,7 @@ def acquire_image_path(soup):
 		acquire_image_url(soup),
 		f"{main.path}BookImages/{category}/{title}.jpg",
 	)
-	path = f"{os.getcwd()}" \
-		f"{main.path}BookImages/{category}/{title}.jpg",
+	path = f"{main.path}BookImages/{category}/{title}.jpg"
 	return path
 
 def acquire_product_description(soup):

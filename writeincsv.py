@@ -24,10 +24,10 @@ def write_info_books(url):
 	if not os.path.exists(f"{main.path}BookImages"):
 		os.mkdir(f"{main.path}BookImages")
 	soup = aib.acquire_html(url)
-	category = soup.h1.string
+	category = soup.h1.string.replace(" ", "")
 	try:
 		file = csv.writer(open(
-			f"{main.path}CSVFiles/{category}.csv".replace(" ", ""),
+			f"{main.path}CSVFiles/{category}.csv",
 			'w',
 			encoding='utf8',
 			newline='',

@@ -15,9 +15,9 @@ parser.add_argument(
 parser.add_argument(
 	"--path",
 	type=str,
-	help="Enter the path where the Csv Files and Images will be saved." \
+	help="Enter the path where the CSV Files and Images will be saved." \
 	"Must end with /",
-	default="",
+	default=f"{os.getcwd()}/".replace("\\", "/"),
 )
 args = parser.parse_args()
 
