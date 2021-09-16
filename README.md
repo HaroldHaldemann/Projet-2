@@ -15,7 +15,7 @@ You must have Python 3.8 or higher installed in order to execute this code.
 1 - Clone the github Repository.
 
 ```bash
-git clone https://github.com/HaroldHaldemann/Openclassrooms
+git clone https://github.com/HaroldHaldemann/Webscrapping
 ```
 
 2 - Create your virtual environment.
